@@ -1,3 +1,3 @@
 # TimeSheetLightningApp
 
-![alt tag](http://url/to/img.png)
+![TimesheetApp Screenshot](/TimeSheetApp.app.png)
