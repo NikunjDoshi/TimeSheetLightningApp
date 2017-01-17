@@ -1,0 +1,10 @@
+<aura:component >
+	<aura:attribute name="spinner" type="Boolean"/>
+    
+    <div class="loading" style="{!if(v.spinner, '', 'display:none;')}">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:component>

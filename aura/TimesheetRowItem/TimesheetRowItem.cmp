@@ -1,0 +1,27 @@
+<aura:component >
+    <aura:attribute name="timeEntriesPerTask" type="TimeEntriesPerWeekPerTask"/>
+    <aura:attribute name="relatedProjects" type="Project2__c[]"/>
+    <tr class="slds-hint-parent slds-m-around--medium">
+        <td class="slds-cell-wrap slds-text-heading--small">
+            <aura:if isTrue="{!!v.timeEntriesPerTask.isNew}">
+                <aura:unescapedHtml value="{!v.timeEntriesPerTask.rowName}"/>
+                <aura:set attribute="else">
+                    <lightning:select name="select1" label="Select an item" value="{!v.timeEntriesPerTask.taskId}">  
+                        <option value="">choose one...</option>
+                        <aura:iteration var="project" items="{!v.relatedProjects}">
+                            <aura:iteration var="task" items="{!project.Project_Tasks__r}">
+                                <option value="{!task.Id}">{!task.Category__c + '-'+task.Name}</option>
+                            </aura:iteration>
+                        </aura:iteration>
+                    </lightning:select> 
+                </aura:set>
+            </aura:if>
+        </td>
+        <aura:iteration items="{!v.timeEntriesPerTask.sevenTimeEntriesPerWeek}" var="aTimeEntry">
+            <td data-label="hours" class="slds-m-around--small" width="10%">
+                <lightning:input label="." type="integer" maxlength="2" name="hours" value="{!aTimeEntry.Hours__c}"/>
+                <lightning:textarea name="notes" value="{!aTimeEntry.Notes__c}" label="." maxlength="140" />
+            </td>              
+        </aura:iteration>   
+    </tr>
+</aura:component>

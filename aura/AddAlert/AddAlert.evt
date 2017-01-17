@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+	<aura:attribute name="alertId" type="String"/>
+	<aura:attribute name="mergeParamMap" type="Map"/>
+</aura:event>

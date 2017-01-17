@@ -1,0 +1,76 @@
+<aura:component controller="TimeSheetCtrl"  extends="c:GenericUtilities">
+    <aura:attribute name="currentTimesheet" type="TimeSheetPerWeek" />
+    <aura:attribute name="entriesToBeUpserted" type="TimeEntriesPerWeekPerTask[]" />
+    <aura:attribute name="offset" type="Integer" default="-1"/>
+    <aura:attribute name="relatedProjects" type="Project2__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.offset}" action="{!c.getTimeSheetOnChange}"/>
+    <article class="slds-card slds-m-around--x-large">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <c:svg xlinkHref="/img/slds-icons/v5.2.0/standard-sprite/svg/symbols.svg#orders" ariaHidden="true" class="slds-icon slds-icon-standard-orders"/>
+                    </div>
+                    <div class="slds-media__body slds-truncate">              
+                        <span class="slds-text-heading--small">Timesheet</span>
+                    </div>
+                </div>
+            </header>
+            <div class="slds-no-flex">
+                <button class="slds-button slds-button--neutral" onclick='{!c.addRow}' >Add Row</button>
+            </div>
+            <div class="slds-no-flex">
+                <button class="slds-button slds-button--neutral" onclick='{!c.saveTimesheet}' >Save</button>
+            </div>
+            <div class="slds-no-flex">
+                <button class="slds-button slds-button--neutral" onclick='{!c.addRow}' >Submit</button>
+            </div>
+        </div>
+        <div class="slds-card__body slds-text-align--left slds-p-around--x-large slds-box slds-theme--default">
+            <div class="slds-grid slds-wrap">   
+                <div id="weekPicker" class="slds-section__title slds-align--absolute-center slds-p-bottom--large">
+                    <button class="slds-button slds-button--icon slds-button--icon-large" title="Previous Week" onclick="{!c.goToPrevWeek}">
+                        <c:svg xlinkHref="/img/slds-icons/v5.2.0/utility-sprite/svg/symbols.svg#back" ariaHidden="true" class="slds-button__icon"/>
+                        <span class="slds-assistive-text">Previous Week</span>
+                    </button> 
+                    {!v.currentTimesheet.displayDates[0]+'--'+ v.currentTimesheet.displayDates[6]}
+                    <button class="slds-button slds-button--icon slds-button--icon-large" title="Next Week" onclick="{!c.goToNextWeek}">
+                        <c:svg xlinkHref="/img/slds-icons/v5.2.0/utility-sprite/svg/symbols.svg#forward" ariaHidden="true" class="slds-button__icon"/>
+                        <span class="slds-assistive-text">Next Week</span>
+                    </button>
+                </div>
+                <div class="slds-p-vertical--small slds-size--1-of-1"> <c:DisplayAlerts /></div>
+                
+                <div class="slds-table--edit_container slds-is-relative">
+                    <table class="slds-table slds-table--edit slds-table--bordered slds-table--fixed-layout" role="grid" >
+                        <thead>
+                            <tr class="slds-line-height--reset slds-m-around--small">
+                                <th scope="col" class="slds-is-resizable slds-text-title--caps"  width="25% !important;">  
+                                    <span class="slds-truncate">Task</span>
+                                </th>
+                                <aura:iteration var="dispDate" items="{!v.currentTimesheet.displayDates}">
+                                    <th scope="col" class="slds-is-sortable slds-is-resizable slds-text-title--caps slds-align--center">         
+                                        {!dispDate}
+                                    </th>
+                                </aura:iteration>
+                                <!--<th scope="col" class="slds-is-resizable slds-text-title-+caps slds-align-+center">  
+                                    <span class="slds-truncate">Task Total</span>
+                                </th>
+                                <th scope="col" class="slds-is-resizable slds-text-title-+caps slds-align-+center">  
+                                    <span class="slds-truncate">Status</span>
+                                </th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.currentTimesheet.timeEntriesPerTask}" var="timeEntriesPerTask" >
+                                <c:TimesheetRowItem timeEntriesPerTask="{!timeEntriesPerTask}" relatedProjects="{!v.relatedProjects}"/>                    
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </article>          
+    <c:LoadingSpinnerComponent spinner="{!v.spinner}" />
+</aura:component>

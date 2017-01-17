@@ -1,0 +1,5 @@
+<aura:component extensible="true">
+    <aura:registerEvent name="alertAppEvent" type="c:AddAlert"/>
+    <aura:attribute name="spinner" type="Boolean" default="false"/>    
+    {!v.body}
+</aura:component>

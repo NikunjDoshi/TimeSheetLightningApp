@@ -1,0 +1,11 @@
+.THIS.slds-section {
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+}
+.THIS .slds-section__content{
+    padding-top: 0rem !important;
+}
+.THIS .slds-section.isClose .slds-section__title-action-icon{
+      transform: rotate(-90deg) !important;
+      transform-origin: 45% !important;
+}

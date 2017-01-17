@@ -1,0 +1,78 @@
+<aura:component controller="LDS_MessageController">
+    <aura:handler event="c:AddAlert" action="{!c.addAlertAction}"/>
+    <aura:attribute name="addedAlertIds" type="String[]"/>
+    <aura:attribute name="allAlertWrappers" type="Map"/>
+    <aura:attribute name="successAlerts" type="LDS_AlertWrapper[]" access="global"/>
+    <aura:attribute name="errorAlerts" type="LDS_AlertWrapper[]" access="global"/>
+    <aura:attribute name="warningAlerts" type="LDS_AlertWrapper[]" access="global"/>
+    <aura:attribute name="infoAlerts" type="LDS_AlertWrapper[]" access="global"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--<aura:iteration var="alertWrapper" items="{!v.addedAlertWrappers}">
+        <c:DisplayAlert alertType="{!alertWrapper.alertType}" alertMessage="{!alertWrapper.alertMessage}"/>
+    </aura:iteration>-->
+    <aura:iteration var="successAlert" items="{!v.successAlerts}"  indexVar="index">
+        <div class="slds-box slds-box--small slds-theme--success slds-m-top--medium slds-theme--alert-texture">
+            <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#success" 
+                   ariaHidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex"/>
+            <span class="slds-align-middle">
+                {!successAlert.alertMessage}
+            </span>
+            
+            <button onclick="{!c.removeAlert}" data-alertId="{!successAlert.alertId}" 
+                    data-index="{!index}" class="slds-button slds-button--icon-inverse slds-notify__close">                
+                <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#close" 
+                       ariaHidden="true" class="slds-button__icon"/>                
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>        
+    </aura:iteration>
+    <aura:iteration var="errorAlert" items="{!v.errorAlerts}" indexVar="index">
+        <div class="slds-box slds-box--small slds-theme--error slds-m-top--medium slds-theme--alert-texture">
+            <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#error" 
+                   ariaHidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex"/>
+            <span class="slds-align-middle">
+                {!errorAlert.alertMessage}
+            </span>
+            <button onclick="{!c.removeAlert}" data-alertId="{!errorAlert.alertId}" 
+                    data-index="{!index}" class="slds-button slds-button--icon-inverse slds-notify__close">                
+                <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#close" 
+                       ariaHidden="true" class="slds-button__icon"/>
+                
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+    </aura:iteration>
+    <aura:iteration var="warningAlert" items="{!v.warningAlerts}" indexVar="index">
+        <div class="slds-box slds-box--small slds-theme--warning slds-m-top--medium slds-theme--alert-texture">
+            <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#warning" 
+                   ariaHidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex"/>
+            <span class="slds-align-middle">
+                {!warningAlert.alertMessage}
+            </span>
+            
+            <button onclick="{!c.removeAlert}" data-alertId="{!warningAlert.alertId}" 
+                    data-index="{!index}" class="slds-button slds-button--icon-inverse slds-notify__close">                
+                <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#close" 
+                       ariaHidden="true" class="slds-button__icon"/>
+                
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+    </aura:iteration>
+    <aura:iteration var="infoAlert" items="{!v.infoAlerts}" indexVar="index">
+        <div id="{!globalId}" class="slds-box slds-box--small slds-theme--info slds-m-top--medium slds-theme--alert-texture">
+            <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#info" 
+                   ariaHidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex"/>
+            <span class="slds-align-middle">
+                {!infoAlert.alertMessage}
+            </span>			
+            <button onclick="{!c.removeAlert}" data-alertid="{!infoAlert.alertId}" 
+                    data-index="{!index}" class="slds-button slds-button--icon-inverse slds-notify__close">                
+                <c:svg xlinkHref="/resource/SLDS203/assets/icons/utility-sprite/svg/symbols.svg#close" 
+                       ariaHidden="true" class="slds-button__icon"/>
+                
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+    </aura:iteration>
+</aura:component>
